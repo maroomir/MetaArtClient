@@ -1,2 +1,5 @@
 PyQt5
 requests
+numpy
+matplotlib
+pillow<=8.4.0

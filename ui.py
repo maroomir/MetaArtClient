@@ -96,7 +96,7 @@ class MainWidget(QWidget):
             cnt = self.sld_images.value()
             event = self.event_dict['go']
             assert isinstance(event, UIEvent)
-            event.to_do(num_image=cnt, text=text)
+            event.to_do(num_images=cnt, text=text)
 
     def save_event(self):
         if 'save' in self.event_dict:
