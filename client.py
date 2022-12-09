@@ -29,12 +29,18 @@ def decode_image(data: dict):
     return res
 
 
+def combine_image(imgs: list, default_size=10):
+    if not isinstance(imgs, list) or len(imgs) == 0:
+        return numpy.zeros((default_size, default_size))
+    else:
+        return numpy.concatenate(imgs, axis=1)
+
+
 def show_image(imgs: list, width=50, height=10):
     if not isinstance(imgs, list) or len(imgs) == 0:
         return
-    imgs = numpy.concatenate(imgs, axis=1)
     matplotlib.pyplot.figure(figsize=(width, height))
-    matplotlib.pyplot.imshow(imgs)
+    matplotlib.pyplot.imshow(combine_image(imgs))
     matplotlib.pyplot.show()
 
 

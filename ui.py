@@ -22,8 +22,8 @@ class MainWidget(QWidget):
                  height: int,
                  version: float,
                  events: dict = None,
-                 img_w: int = 640,
-                 img_h: int = 640):
+                 img_w: int = 240,
+                 img_h: int = 240):
         super().__init__()
         self.lb_title = QLabel(f'MetaArtClient v{version:.2f}', self)
         self.lb_result = QLabel(self)
@@ -96,7 +96,16 @@ class MainWidget(QWidget):
             cnt = self.sld_images.value()
             event = self.event_dict['go']
             assert isinstance(event, UIEvent)
-            event.to_do(num_images=cnt, text=text)
+            # Event 실행 후 결과 Image 수령
+            res = event.to_do(num_images=cnt, text=text)
+            width, height = res.shape[1], res.shape[0]
+            # 결과 Image를 QImage 로 변환
+            image = QImage(res, width, height, 3 * width, QImage.Format.Format_RGB888)
+            # 결과 출력 Label 크기 조정
+            self.lb_result.setFixedWidth(width)
+            self.lb_result.setFixedHeight(height)
+            # 결과 창에 출력
+            self.lb_result.setPixmap(QPixmap(image))
 
     def save_event(self):
         if 'save' in self.event_dict:
@@ -130,4 +139,4 @@ if __name__ == "__main__":
 
 
     test_event, go_event = TestEvent(), GoEvent()
-    init(10, 30, 1280, 800, 0.0, events={'test': test_event, 'go': go_event})
+    init(10, 30, 1280, 480, 0.0, events={'test': test_event, 'go': go_event})

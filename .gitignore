@@ -130,3 +130,6 @@ dmypy.json
 
 # Client setting files
 setting.json
+
+# Client result files
+*.jpg
